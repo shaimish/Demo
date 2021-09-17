@@ -440,11 +440,11 @@
 			<property name="allowPublicFinalFields" value="false" />
 		</module>
 	</module>
-
+<!--
 	<module name="SuppressionFilter">
 		<property name="file"
 			value="${checkstyle.config.path}/code-quality/suppressions.xml" />
 		<property name="optional" value="false" />
 	</module>
-
+-->
 </module>

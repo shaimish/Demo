@@ -89,29 +89,89 @@
           </execution>
         </executions>
         </plugin>
-        <plugin>
+        
+        <!--plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>3.1.2</version>
-          </plugin>
-        </plugins>
+          </plugin-->
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.17</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>7.6.1</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <configLocation>checkstyle.xml</configLocation>
+            <propertyExpansion>checkstyle.config.path=${basedir}</propertyExpansion>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <consoleOutput>true</consoleOutput>
+            <failsOnError>true</failsOnError>
+            <linkXRef>false</linkXRef>
+          </configuration>
+          <executions>
+            <execution>
+              <id>validate</id>
+              <phase>validate</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.4</version>
+				<configuration>
+					<includeFilterFile>findbugs.xml</includeFilterFile>
+					<failOnError>true</failOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<id>analyze-compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+      </plugins>  
     </pluginManagement>
   </build>
-<reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.15.0</version>
-      </plugin>
+  <reporting>
+      <plugins>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.1.2</version>
-            <configuration>
-                <configLocation>checkstyle.xml</configLocation>
-            </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>3.14.0</version>
+          <configuration>
+            <rulesets>
+              <ruleset>pmd.xml</ruleset>
+            </rulesets>
+            <printFailingErrors>true</printFailingErrors>
+            <linkXRef>true</linkXRef>
+          </configuration>
         </plugin>
-    </plugins>
-</reporting>
+         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.17</version>
+          <reportSets>
+            <reportSet>
+              <reports>
+                <report>checkstyle</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+      </plugins>
+    </reporting>
 </project>
